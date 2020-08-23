@@ -28,7 +28,7 @@ router.post('/', passport.authenticate('jwt', { session : false }), async (req, 
 // GET get all Topics
 router.get('/', async (req, res, next) => {
 try {
-    const topics = await TopicModel.find();
+    const topics = await TopicModel.find().sort({ $natural: -1 });
     res.status(200).send(topics);
 } catch (error) {
     res.status(400).send({error});
