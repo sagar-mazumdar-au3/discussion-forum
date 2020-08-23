@@ -25,10 +25,11 @@ router.post('/', passport.authenticate('jwt', { session : false }), async (req, 
 
 });
 
-// GET get all Comments
-router.get('/', async (req, res, next) => {
+// GET get Comments by topicID
+router.get('/:topicID', async (req, res, next) => {
+    const {topicID} = req.params;
 try {
-    const comments = await CommentModel.find();
+    const comments = await CommentModel.find({topicID}).sort({ $natural: -1 });
     res.status(200).send(comments);
 } catch (error) {
     res.status(400).send({error});
